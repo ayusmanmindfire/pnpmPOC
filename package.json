@@ -1,0 +1,23 @@
+{
+  "name": "pnpm-poc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm run --filter ./packages/* build && pnpm run copy-dists",
+    "copy-dists": "node scripts/merge-dists.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.14.1",
+    "fs-extra": "^11.3.0",
+    "typescript": "^5.8.3"
+  }
+}
