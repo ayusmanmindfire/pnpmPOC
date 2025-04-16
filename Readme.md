@@ -1,1 +1,18 @@
-POC
+# PNPM Functions Bundler
+
+This project demonstrates how to bundle multiple independent Node.js functions (like `functionA`, `functionB`) using **Webpack**, **PNPM workspaces**, and **Babel**.
+
+Each function lives in its own folder under `packages/`, and is bundled separately into the `dist/` folder.
+
+---
+
+### 1. Install Dependencies
+This will add all dependencies according to their respective packages
+```bash
+pnpm -r install
+```
+
+### 2. Build
+Run build command in root directory
+```bash
+pnpm build
