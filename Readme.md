@@ -14,5 +14,15 @@ pnpm -r install
 
 ### 2. Build
 Run build command in root directory
+
+This will generate build files in root directory for all packages together
 ```bash
 pnpm build
+
+```
+This will generate build files in specific package, you can use functionB as well. According to your package you can mention build commands in package.json file
+
+```bash
+pnpm build:functionA
+
+```

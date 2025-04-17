@@ -1,25 +1,23 @@
-import fs from 'fs';
+import fs from 'fs-extra';
 import path from 'path';
-import fse from 'fs-extra';
-import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 
-// Manually define __dirname in ES module scope
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const packageName = process.argv[2]; // e.g., "functionA"
 
-const packagesDir = path.join(__dirname, '..', 'packages');
-const distDir = path.join(__dirname, '..', 'dist');
+if (!packageName) {
+  console.error('❌ Please specify a package name.');
+  process.exit(1);
+}
 
-// Clean existing root dist
-fse.emptyDirSync(distDir);
-
-// Copy each package's `dist` into root `dist/<packageName>`
-fs.readdirSync(packagesDir).forEach(pkgName => {
-  const pkgDistPath = path.join(packagesDir, pkgName, 'dist');
-  const targetPath = path.join(distDir, pkgName);
-
-  if (fs.existsSync(pkgDistPath)) {
-    fse.copySync(pkgDistPath, targetPath);
-    console.log(`✔ Copied ${pkgName} to dist/${pkgName}`);
-  }
+console.log(`🔨 Building ${packageName}...`);
+execSync(`cross-env TARGET_PACKAGE=${packageName} webpack --config webpack.config.js`, {
+  stdio: 'inherit',
 });
+
+const rootDist = path.resolve('dist', packageName);
+const packageDist = path.resolve('packages', packageName, 'dist');
+
+fs.ensureDirSync(packageDist);
+fs.copySync(rootDist, packageDist);
+
+console.log(`✅ Copied ${packageName} to packages/${packageName}/dist`);

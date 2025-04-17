@@ -5,13 +5,19 @@ import nodeExternals from 'webpack-node-externals';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Dynamic entry points for each function
+// Get the target package from environment variable or fallback to 'all'
+const targetPackage = process.env.TARGET_PACKAGE || 'all';
+
+// Define the entry points dynamically based on the target package
 const entries = {
   functionA: './packages/functionA/index.js',
   functionB: './packages/functionB/index.js',
 };
 
-const configs = Object.entries(entries).map(([name, entry]) => ({
+// If 'all' is selected, use all the entries, otherwise use the selected package
+const selectedEntries = targetPackage === 'all' ? entries : { [targetPackage]: entries[targetPackage] };
+
+const configs = Object.entries(selectedEntries).map(([name, entry]) => ({
   target: 'node',
   mode: 'production',
   entry: entry,

@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "build:functionA": "node scripts/merge-dists.js functionA",
+  "build:functionB": "node scripts/merge-dists.js functionB"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.14.1",
     "babel-loader": "^10.0.0",
+    "cross-env": "^7.0.3",
     "fs-extra": "^11.3.0",
     "webpack": "^5.99.5",
     "webpack-cli": "^6.0.1",
