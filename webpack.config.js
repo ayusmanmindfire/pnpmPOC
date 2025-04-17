@@ -19,7 +19,12 @@ const configs = Object.entries(entries).map(([name, entry]) => ({
     path: path.resolve(__dirname, 'dist', name),
     filename: 'bundle.js',
   },
-  externals: [nodeExternals()],
+  externals: [
+    nodeExternals(),
+    {
+      '@azure/functions-core': 'commonjs @azure/functions-core',
+    },
+  ],
   module: {
     rules: [
       {
