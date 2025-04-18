@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"node dist/functionA/bundle.js",
+    "start":"func start --script-root dist/functionC",
     "build": "webpack --config webpack.config.js",
     "build:functionA": "node scripts/merge-dists.js functionA",
-  "build:functionB": "node scripts/merge-dists.js functionB"
+  "build:functionB": "node scripts/merge-dists.js functionB",
+  "build:functionC": "node scripts/merge-dists.js functionC"
   },
   "keywords": [],
   "author": "",
