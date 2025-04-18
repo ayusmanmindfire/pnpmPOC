@@ -3,6 +3,7 @@ import path from 'path';
 import { execSync } from 'child_process';
 
 const packageName = process.argv[2]; // e.g., "functionA"
+console.log(packageName)
 
 if (!packageName) {
   console.error('❌ Please specify a package name.');

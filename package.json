@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "commonjs",
   "scripts": {
     "start":"node dist/functionA/bundle.js",
     "build": "webpack --config webpack.config.js",
