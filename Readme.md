@@ -26,3 +26,9 @@ This will generate build files in specific package, you can use functionB as wel
 pnpm build:functionA
 
 ```
+
+I setup a simple server in functionA, on starting command it will run from build files. You can modify commands accordingly in package.json
+
+```bash
+pnpm start
+```
