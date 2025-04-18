@@ -12,6 +12,7 @@ const targetPackage = process.env.TARGET_PACKAGE || 'all';
 const entries = {
   functionA: './packages/functionA/index.js',
   functionB: './packages/functionB/index.js',
+  functionC: './packages/functionC/src/index.js'
 };
 
 // If 'all' is selected, use all the entries, otherwise use the selected package
