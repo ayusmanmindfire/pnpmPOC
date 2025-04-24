@@ -1,13 +1,12 @@
-import { app } from '@azure/functions';
-
-app.http('httpTrigger1', {
+module.exports = {
+  name: 'httpTrigger1',
+  config: {
     methods: ['GET', 'POST'],
     authLevel: 'anonymous',
     handler: async (request, context) => {
-        context.log(`Http function processed request for url "${request.url}"`);
-
-        const name = request.query.get('name') || await request.text() || 'world';
-
-        return { body: `Hello, ${name}!` };
+      context.log(`Http function processed request for url "${request.url}"`);
+      const name = request.query.get('name') || await request.text() || 'world';
+      return { body: `Hello, ${name}!` };
     }
-});
+  }
+};
