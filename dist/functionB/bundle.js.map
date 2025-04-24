@@ -1,0 +1,1 @@
+{"version":3,"file":"bundle.js","mappings":"AAAAA,QAAQC,IAAI,wB","sources":["webpack://pnpm-poc/./packages/functionB/index.js"],"sourcesContent":["console.log(\"I am from function B\")"],"names":["console","log"],"sourceRoot":""}

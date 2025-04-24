@@ -1,5 +1,4 @@
-import { app } from '@azure/functions';
+const { app } = require('@azure/functions');
+const { name, config } = require('./functions/httpTrigger1');
 
-app.setup({
-    enableHttpStream: true,
-});
+app.http(name, config);

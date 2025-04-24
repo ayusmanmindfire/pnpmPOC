@@ -25,7 +25,9 @@ const configs = Object.entries(selectedEntries).map(([name, entry]) => ({
   output: {
     path: path.resolve(__dirname, 'dist', name),
     filename: 'bundle.js',
+    libraryTarget:"commonjs2"
   },
+  devtool: 'source-map',
   externals: [
     nodeExternals(),
     {
