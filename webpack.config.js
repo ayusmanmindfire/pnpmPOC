@@ -1,48 +1,99 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import nodeExternals from 'webpack-node-externals';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import fs from 'fs';
+import glob from 'fast-glob';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Get the target package from environment variable or fallback to 'all'
 const targetPackage = process.env.TARGET_PACKAGE || 'all';
 
-// Define the entry points dynamically based on the target package
-const entries = {
-  functionA: './packages/functionA/index.js',
-  functionB: './packages/functionB/index.js',
-  functionC: './packages/functionC/src/index.js'
-};
+// Dynamically take the entries from packages
+const packagesPath = path.join(__dirname, 'packages');
 
-// If 'all' is selected, use all the entries, otherwise use the selected package
-const selectedEntries = targetPackage === 'all' ? entries : { [targetPackage]: entries[targetPackage] };
+const packageDirs = Object.fromEntries(
+  fs
+    .readdirSync(packagesPath, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => [dirent.name, dirent.name])
+);
 
-const configs = Object.entries(selectedEntries).map(([name, entry]) => ({
-  target: 'node',
-  mode: 'production',
-  entry: entry,
-  output: {
-    path: path.resolve(__dirname, 'dist', name),
-    filename: 'bundle.js',
-    libraryTarget:"commonjs2"
-  },
-  devtool: 'source-map',
-  externals: [
-    nodeExternals(),
-    {
-      '@azure/functions-core': 'commonjs @azure/functions-core',
+const selectedDirs =
+  targetPackage === 'all' ? packageDirs : { [targetPackage]: packageDirs[targetPackage] };
+
+const configs = Object.entries(selectedDirs).map(([pkgName, pkgDir]) => {
+  const srcDir = path.resolve(__dirname, 'packages', pkgDir, 'src');
+  const distDir = path.resolve(__dirname, 'dist', pkgDir);
+
+  // Find all JS files in src directory
+  const files = glob.sync('**/*.js', { cwd: srcDir });
+
+  // Construct multiple entry points
+  const entries = {};
+  files.forEach((file) => {
+    const name = file.replace(/\.js$/, ''); // remove .js extension
+    entries[name] = path.resolve(srcDir, file);
+  });
+
+  // Files to copy if they exist
+  const copyTargets = ['host.json', 'local.settings.json']
+    .map((f) => {
+      const fullPath = path.resolve(__dirname, 'packages', pkgDir, f);
+      return fs.existsSync(fullPath)
+        ? { from: fullPath, to: path.join(distDir, f) }
+        : null;
+    })
+    .filter(Boolean);
+
+  // Minimal package.json plugin
+  class MinimalPackageJsonPlugin {
+    apply(compiler) {
+      compiler.hooks.afterEmit.tap('MinimalPackageJsonPlugin', () => {
+        const pkgJsonPath = path.join(distDir, 'package.json');
+        fs.writeFileSync(
+          pkgJsonPath,
+          JSON.stringify({ main: 'src/{index.js,functions/*.js}' }, null, 2),
+          'utf-8'
+        );
+      });
+    }
+  }
+
+  return {
+    name: pkgName,
+    target: 'node',
+    mode: 'production',
+    entry: entries,
+    output: {
+      path: path.join(distDir, 'src'),
+      filename: '[name].js',
+      libraryTarget: 'commonjs2',
     },
-  ],
-  module: {
-    rules: [
+    devtool: 'source-map',
+    externals: [
+      nodeExternals(),
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: 'babel-loader',
+        '@azure/functions-core': 'commonjs @azure/functions-core',
       },
     ],
-  },
-}));
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: 'babel-loader',
+        },
+      ],
+    },
+    plugins: [
+      ...(copyTargets.length > 0
+        ? [new CopyWebpackPlugin({ patterns: copyTargets })]
+        : []),
+      new MinimalPackageJsonPlugin(),
+    ],
+  };
+});
 
 export default configs;

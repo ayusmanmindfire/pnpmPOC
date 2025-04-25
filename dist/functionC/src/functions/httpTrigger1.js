@@ -1,0 +1,2 @@
+(()=>{var e={4226:e=>{e.exports={name:"httpTrigger1",config:{methods:["GET","POST"],authLevel:"anonymous",handler:async(e,r)=>(r.log(`Http function processed request for url "${e.url}"`),{body:`Hello, ${e.query.get("name")||await e.text()||"world"}!`})}}}},r={},t=function t(o){var n=r[o];if(void 0!==n)return n.exports;var s=r[o]={exports:{}};return e[o](s,s.exports,t),s.exports}(4226);module.exports=t})();
+//# sourceMappingURL=httpTrigger1.js.map

@@ -1,5 +1,5 @@
 {
-  "name": "functionc",
+  "name": "functiond",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -10,5 +10,5 @@
     "@azure/functions": "^4.0.0"
   },
   "devDependencies": {},
-  "main": "src/index.js"
+  "main": "./packages/functionD/src/{index.js,functions/*.js}"
 }

@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"func start --script-root dist/functionC",
+    "start": "func start --script-root dist/functionD",
     "build": "webpack --config webpack.config.js",
     "build:functionA": "node scripts/merge-dists.js functionA",
-  "build:functionB": "node scripts/merge-dists.js functionB",
-  "build:functionC": "node scripts/merge-dists.js functionC"
+    "build:functionB": "node scripts/merge-dists.js functionB",
+    "build:functionC": "node scripts/merge-dists.js functionC"
   },
   "keywords": [],
   "author": "",
@@ -24,5 +24,10 @@
     "webpack": "^5.99.5",
     "webpack-cli": "^6.0.1",
     "webpack-node-externals": "^3.0.0"
+  },
+  "dependencies": {
+    "copy-webpack-plugin": "^13.0.0",
+    "fast-glob": "^3.3.3",
+    "glob": "^11.0.2"
   }
 }
