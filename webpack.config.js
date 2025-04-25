@@ -3,64 +3,69 @@ import { fileURLToPath } from 'url';
 import nodeExternals from 'webpack-node-externals';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import fs from 'fs';
+import glob from 'fast-glob';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const targetPackage = process.env.TARGET_PACKAGE || 'all';
 
-const entries = {
-  functionA: './packages/functionA/index.js',
-  functionB: './packages/functionB/index.js',
-  functionC: './packages/functionC/src/index.js',
-  functionD: './packages/functionD/src',
+const packageDirs = {
+  functionA: 'functionA',
+  functionB: 'functionB',
+  functionC: 'functionC',
+  functionD: 'functionD',
 };
 
-const selectedEntries =
-  targetPackage === 'all' ? entries : { [targetPackage]: entries[targetPackage] };
+const selectedDirs =
+  targetPackage === 'all' ? packageDirs : { [targetPackage]: packageDirs[targetPackage] };
 
-// Helper: Check if a file exists in the package root
-const fileIfExists = (packageName, filename) => {
-  const packagePath = path.join(__dirname, 'packages', packageName, filename);
-  return fs.existsSync(packagePath)
-    ? {
-        from: packagePath,
-        to: path.join(__dirname, 'dist', packageName, filename),
-      }
-    : null;
-};
+const configs = Object.entries(selectedDirs).map(([pkgName, pkgDir]) => {
+  const srcDir = path.resolve(__dirname, 'packages', pkgDir, 'src');
+  const distDir = path.resolve(__dirname, 'dist', pkgDir);
 
-// Helper: Custom plugin to generate a minimal package.json
-class MinimalPackageJsonPlugin {
-  constructor(distPath) {
-    this.distPath = distPath;
-  }
+  // Find all JS files in src directory
+  const files = glob.sync('**/*.js', { cwd: srcDir });
 
-  apply(compiler) {
-    compiler.hooks.afterEmit.tap('MinimalPackageJsonPlugin', () => {
-      const packageJsonPath = path.join(this.distPath, 'package.json');
-      fs.writeFileSync(
-        packageJsonPath,
-        JSON.stringify({ main: 'bundle.js' }, null, 2),
-        'utf-8'
-      );
-    });
-  }
-}
+  // Construct multiple entry points
+  const entries = {};
+  files.forEach((file) => {
+    const name = file.replace(/\.js$/, ''); // remove .js extension
+    entries[name] = path.resolve(srcDir, file);
+  });
 
-const configs = Object.entries(selectedEntries).map(([name, entry]) => {
-  const distPath = path.resolve(__dirname, 'dist', name);
+  // Files to copy if they exist
   const copyTargets = ['host.json', 'local.settings.json']
-    .map((f) => fileIfExists(name, f))
-    .filter(Boolean); // remove nulls
+    .map((f) => {
+      const fullPath = path.resolve(__dirname, 'packages', pkgDir, f);
+      return fs.existsSync(fullPath)
+        ? { from: fullPath, to: path.join(distDir, f) }
+        : null;
+    })
+    .filter(Boolean);
+
+  // Minimal package.json plugin
+  class MinimalPackageJsonPlugin {
+    apply(compiler) {
+      compiler.hooks.afterEmit.tap('MinimalPackageJsonPlugin', () => {
+        const pkgJsonPath = path.join(distDir, 'package.json');
+        fs.writeFileSync(
+          pkgJsonPath,
+          JSON.stringify({ main: 'src/{index.js,functions/*.js}' }, null, 2),
+          'utf-8'
+        );
+      });
+    }
+  }
 
   return {
+    name: pkgName,
     target: 'node',
     mode: 'production',
-    entry,
+    entry: entries,
     output: {
-      path: distPath,
-      filename: 'bundle.js',
+      path: path.join(distDir, 'src'),
+      filename: '[name].js',
       libraryTarget: 'commonjs2',
     },
     devtool: 'source-map',
@@ -83,7 +88,7 @@ const configs = Object.entries(selectedEntries).map(([name, entry]) => {
       ...(copyTargets.length > 0
         ? [new CopyWebpackPlugin({ patterns: copyTargets })]
         : []),
-      new MinimalPackageJsonPlugin(distPath),
+      new MinimalPackageJsonPlugin(),
     ],
   };
 });
