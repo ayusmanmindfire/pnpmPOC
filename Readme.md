@@ -9,7 +9,7 @@ Each function lives in its own folder under `packages/`, and is bundled separate
 ### 1. Install Dependencies
 This will add all dependencies according to their respective packages
 ```bash
-pnpm -r install
+pnpm install
 ```
 
 ### 2. Build
@@ -27,7 +27,7 @@ pnpm build:functionA
 
 ```
 
-I setup a simple server in functionA, on starting command it will run from build files. You can modify commands accordingly in package.json
+I have targeted functionC from dist folder for start command, on starting command it will run from build files. You can modify commands accordingly in package.json
 
 ```bash
 pnpm start

@@ -1,5 +1,5 @@
 {
-    "azureFunctions.deploySubpath": "packages\\functionD",
+    "azureFunctions.deploySubpath": "packages\\noPatternFunc",
     "azureFunctions.postDeployTask": "npm install (functions)",
     "azureFunctions.projectLanguage": "JavaScript",
     "azureFunctions.projectRuntime": "~4",

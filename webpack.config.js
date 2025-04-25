@@ -10,12 +10,15 @@ const __dirname = path.dirname(__filename);
 
 const targetPackage = process.env.TARGET_PACKAGE || 'all';
 
-const packageDirs = {
-  functionA: 'functionA',
-  functionB: 'functionB',
-  functionC: 'functionC',
-  functionD: 'functionD',
-};
+// Dynamically take the entries from packages
+const packagesPath = path.join(__dirname, 'packages');
+
+const packageDirs = Object.fromEntries(
+  fs
+    .readdirSync(packagesPath, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => [dirent.name, dirent.name])
+);
 
 const selectedDirs =
   targetPackage === 'all' ? packageDirs : { [targetPackage]: packageDirs[targetPackage] };

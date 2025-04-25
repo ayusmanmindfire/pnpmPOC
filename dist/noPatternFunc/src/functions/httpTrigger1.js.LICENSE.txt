@@ -1,0 +1,370 @@
+/*!
+ * cookie
+ * Copyright(c) 2012-2014 Roman Shtylman
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+
+/*! ../InvocationContext */
+
+/*! ../constants */
+
+/*! ../converters/fromRpcNullable */
+
+/*! ../converters/fromRpcTypedData */
+
+/*! ../errors */
+
+/*! ../http/HttpRequest */
+
+/*! ../http/HttpResponse */
+
+/*! ../http/httpProxy */
+
+/*! ../setup */
+
+/*! ../utils/Disposable */
+
+/*! ../utils/isTrigger */
+
+/*! ../utils/nonNull */
+
+/*! ../utils/tryGetCoreApiLazy */
+
+/*! ../utils/workerSystemLog */
+
+/*! ./AppStartContext */
+
+/*! ./AppTerminateContext */
+
+/*! ./HookContext */
+
+/*! ./InvocationContext */
+
+/*! ./InvocationHookContext */
+
+/*! ./InvocationModel */
+
+/*! ./LogHookContext */
+
+/*! ./PostInvocationContext */
+
+/*! ./PreInvocationContext */
+
+/*! ./ProgrammingModel */
+
+/*! ./addBindingName */
+
+/*! ./app */
+
+/*! ./constants */
+
+/*! ./converters/fromRpcBindings */
+
+/*! ./converters/fromRpcContext */
+
+/*! ./converters/fromRpcTriggerMetadata */
+
+/*! ./converters/fromRpcTypedData */
+
+/*! ./converters/toCamelCase */
+
+/*! ./converters/toCoreFunctionMetadata */
+
+/*! ./converters/toRpcHttp */
+
+/*! ./converters/toRpcTypedData */
+
+/*! ./errors */
+
+/*! ./extractHttpUserFromHeaders */
+
+/*! ./fallbackLogHandler */
+
+/*! ./fromRpcTypedData */
+
+/*! ./hooks/AppStartContext */
+
+/*! ./hooks/AppTerminateContext */
+
+/*! ./hooks/HookContext */
+
+/*! ./hooks/InvocationHookContext */
+
+/*! ./hooks/LogHookContext */
+
+/*! ./hooks/PostInvocationContext */
+
+/*! ./hooks/PreInvocationContext */
+
+/*! ./hooks/registerHook */
+
+/*! ./http/HttpRequest */
+
+/*! ./http/HttpResponse */
+
+/*! ./http/httpProxy */
+
+/*! ./input */
+
+/*! ./output */
+
+/*! ./setup */
+
+/*! ./toCamelCase */
+
+/*! ./toRpcDuration */
+
+/*! ./toRpcHttpCookie */
+
+/*! ./toRpcNullable */
+
+/*! ./toRpcTypedData */
+
+/*! ./trigger */
+
+/*! ./tryGetCoreApiLazy */
+
+/*! ./utils/Disposable */
+
+/*! ./utils/fallbackLogHandler */
+
+/*! ./utils/getRandomHexString */
+
+/*! ./utils/isTrigger */
+
+/*! ./utils/nonNull */
+
+/*! ./utils/tryGetCoreApiLazy */
+
+/*! ./utils/workerSystemLog */
+
+/*! @azure/functions-core */
+
+/*! cookie */
+
+/*! crypto */
+
+/*! events */
+
+/*! formdata-polyfill. MIT License. Jimmy Wärting <https://jimmy.warting.se/opensource> */
+
+/*! http */
+
+/*! net */
+
+/*! undici */
+
+/*! url */
+
+/*! util */
+
+/*! ws. MIT License. Einar Otto Stangvik <einaros@gmail.com> */
+
+/*!********************!*\
+  !*** ./src/app.ts ***!
+  \********************/
+
+/*!**********************!*\
+  !*** ./src/index.ts ***!
+  \**********************/
+
+/*!**********************!*\
+  !*** ./src/input.ts ***!
+  \**********************/
+
+/*!**********************!*\
+  !*** ./src/setup.ts ***!
+  \**********************/
+
+/*!**********************!*\
+  !*** external "net" ***!
+  \**********************/
+
+/*!**********************!*\
+  !*** external "url" ***!
+  \**********************/
+
+/*!***********************!*\
+  !*** ./src/errors.ts ***!
+  \***********************/
+
+/*!***********************!*\
+  !*** ./src/output.ts ***!
+  \***********************/
+
+/*!***********************!*\
+  !*** external "http" ***!
+  \***********************/
+
+/*!***********************!*\
+  !*** external "util" ***!
+  \***********************/
+
+/*!************************!*\
+  !*** ./src/trigger.ts ***!
+  \************************/
+
+/*!*************************!*\
+  !*** external "cookie" ***!
+  \*************************/
+
+/*!*************************!*\
+  !*** external "crypto" ***!
+  \*************************/
+
+/*!*************************!*\
+  !*** external "events" ***!
+  \*************************/
+
+/*!*************************!*\
+  !*** external "undici" ***!
+  \*************************/
+
+/*!**************************!*\
+  !*** ./src/constants.ts ***!
+  \**************************/
+
+/*!******************************!*\
+  !*** ./src/utils/nonNull.ts ***!
+  \******************************/
+
+/*!*******************************!*\
+  !*** ./src/addBindingName.ts ***!
+  \*******************************/
+
+/*!*******************************!*\
+  !*** ./src/http/httpProxy.ts ***!
+  \*******************************/
+
+/*!********************************!*\
+  !*** ./src/InvocationModel.ts ***!
+  \********************************/
+
+/*!********************************!*\
+  !*** ./src/utils/isTrigger.ts ***!
+  \********************************/
+
+/*!*********************************!*\
+  !*** ./src/ProgrammingModel.ts ***!
+  \*********************************/
+
+/*!*********************************!*\
+  !*** ./src/http/HttpRequest.ts ***!
+  \*********************************/
+
+/*!*********************************!*\
+  !*** ./src/utils/Disposable.ts ***!
+  \*********************************/
+
+/*!**********************************!*\
+  !*** ./src/InvocationContext.ts ***!
+  \**********************************/
+
+/*!**********************************!*\
+  !*** ./src/hooks/HookContext.ts ***!
+  \**********************************/
+
+/*!**********************************!*\
+  !*** ./src/http/HttpResponse.ts ***!
+  \**********************************/
+
+/*!***********************************!*\
+  !*** ./src/hooks/registerHook.ts ***!
+  \***********************************/
+
+/*!*************************************!*\
+  !*** ./src/converters/toRpcHttp.ts ***!
+  \*************************************/
+
+/*!*************************************!*\
+  !*** ./src/hooks/LogHookContext.ts ***!
+  \*************************************/
+
+/*!**************************************!*\
+  !*** ./src/hooks/AppStartContext.ts ***!
+  \**************************************/
+
+/*!**************************************!*\
+  !*** ./src/utils/workerSystemLog.ts ***!
+  \**************************************/
+
+/*!***************************************!*\
+  !*** ./src/converters/toCamelCase.ts ***!
+  \***************************************/
+
+/*!****************************************!*\
+  !*** ./src/utils/tryGetCoreApiLazy.ts ***!
+  \****************************************/
+
+/*!****************************************!*\
+  !*** external "@azure/functions-core" ***!
+  \****************************************/
+
+/*!*****************************************!*\
+  !*** ./src/converters/toRpcDuration.ts ***!
+  \*****************************************/
+
+/*!*****************************************!*\
+  !*** ./src/converters/toRpcNullable.ts ***!
+  \*****************************************/
+
+/*!*****************************************!*\
+  !*** ./src/utils/fallbackLogHandler.ts ***!
+  \*****************************************/
+
+/*!*****************************************!*\
+  !*** ./src/utils/getRandomHexString.ts ***!
+  \*****************************************/
+
+/*!******************************************!*\
+  !*** ./src/converters/fromRpcContext.ts ***!
+  \******************************************/
+
+/*!******************************************!*\
+  !*** ./src/converters/toRpcTypedData.ts ***!
+  \******************************************/
+
+/*!******************************************!*\
+  !*** ./src/hooks/AppTerminateContext.ts ***!
+  \******************************************/
+
+/*!*******************************************!*\
+  !*** ./src/converters/fromRpcBindings.ts ***!
+  \*******************************************/
+
+/*!*******************************************!*\
+  !*** ./src/converters/fromRpcNullable.ts ***!
+  \*******************************************/
+
+/*!*******************************************!*\
+  !*** ./src/converters/toRpcHttpCookie.ts ***!
+  \*******************************************/
+
+/*!*******************************************!*\
+  !*** ./src/hooks/PreInvocationContext.ts ***!
+  \*******************************************/
+
+/*!********************************************!*\
+  !*** ./src/converters/fromRpcTypedData.ts ***!
+  \********************************************/
+
+/*!********************************************!*\
+  !*** ./src/hooks/InvocationHookContext.ts ***!
+  \********************************************/
+
+/*!********************************************!*\
+  !*** ./src/hooks/PostInvocationContext.ts ***!
+  \********************************************/
+
+/*!************************************************!*\
+  !*** ./src/http/extractHttpUserFromHeaders.ts ***!
+  \************************************************/
+
+/*!**************************************************!*\
+  !*** ./src/converters/fromRpcTriggerMetadata.ts ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./src/converters/toCoreFunctionMetadata.ts ***!
+  \**************************************************/

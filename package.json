@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "func start --script-root dist/functionC",
+    "start": "func start --script-root dist/functionD",
     "build": "webpack --config webpack.config.js",
     "build:functionA": "node scripts/merge-dists.js functionA",
     "build:functionB": "node scripts/merge-dists.js functionB",
