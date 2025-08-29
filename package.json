@@ -1,33 +1,19 @@
 {
-  "name": "pnpm-poc",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "js-serverless-monorepo-boilerplate",
+  "private": true,
+  "packageManager": "pnpm@9.1.0",
   "scripts": {
-    "start": "func start --script-root dist/functionD",
-    "build": "webpack --config webpack.config.js",
-    "build:functionA": "node scripts/merge-dists.js functionA",
-    "build:functionB": "node scripts/merge-dists.js functionB",
-    "build:functionC": "node scripts/merge-dists.js functionC"
+    "bootstrap": "pnpm install",
+    "build": "nx run-many --target=build",
+    "test": "nx run-many --target=test",
+    "deploy:aws": "nx run-many --target=deploy --tags=provider:aws",
+    "deploy:azure": "nx run-many --target=deploy --tags=provider:azure",
+    "deploy:gcp": "nx run-many --target=deploy --tags=provider:gcp"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.26.10",
-    "@babel/preset-env": "^7.26.9",
-    "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.14.1",
-    "babel-loader": "^10.0.0",
-    "cross-env": "^7.0.3",
-    "fs-extra": "^11.3.0",
-    "webpack": "^5.99.5",
-    "webpack-cli": "^6.0.1",
-    "webpack-node-externals": "^3.0.0"
-  },
-  "dependencies": {
-    "copy-webpack-plugin": "^13.0.0",
-    "fast-glob": "^3.3.3",
-    "glob": "^11.0.2"
+    "@types/aws-lambda": "^8.10.152",
+    "aws-lambda": "^1.0.7",
+    "nx": "latest",
+    "plop": "^4.0.1"
   }
 }
