@@ -1,0 +1,9 @@
+{
+    "extends": "../../configs/ts/tsconfig.base.json",
+    "compilerOptions": {
+      "outDir": "../../dist/out-tsc",
+      "composite": true,
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+}

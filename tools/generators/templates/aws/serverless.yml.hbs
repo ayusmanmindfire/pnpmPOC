@@ -1,0 +1,26 @@
+service: {{dashCase name}}
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: ${env:STAGE, 'dev'}
+  region: ${env:REGION, 'us-east-1'}
+
+package:
+  individually: true
+  patterns:
+    - '!./**'
+    - '../../dist/apps/aws/{{dashCase name}}/**'
+
+functions:
+  handler:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /{{dashCase name}}
+          method: get

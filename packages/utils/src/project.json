@@ -1,0 +1,19 @@
+{
+    "name": "utils",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/utils/src",
+    "projectType": "library",
+    "tags": ["shared"],
+    "targets": {
+      "lint": {
+        "executor": "@nx/eslint:lint"
+      },
+      "test": {
+        "executor": "@nx/jest:jest",
+        "outputs": ["{workspaceRoot}/coverage/packages/utils"],
+        "options": {
+          "jestConfig": "packages/utils/jest.config.ts"
+        }
+      }
+    }
+  }

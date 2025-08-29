@@ -1,0 +1,29 @@
+{
+  "name": "{{dashCase name}}",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/{{provider}}/{{dashCase name}}/src",
+  "projectType": "application",
+  "tags": ["provider:{{provider}}", "domain:{{dashCase name}}"],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/{{provider}}/{{dashCase name}}",
+        "main": "apps/{{provider}}/{{dashCase name}}/src/index.ts",
+        "tsConfig": "apps/{{provider}}/{{dashCase name}}/tsconfig.app.json",
+        "assets":,
+        "bundle": true,
+        "platform": "node",
+        "dependenciesFieldType": "dependencies"
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "serverless deploy",
+        "cwd": "apps/{{provider}}/{{dashCase name}}"
+      }
+    }
+  }
+}

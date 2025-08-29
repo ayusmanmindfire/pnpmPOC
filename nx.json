@@ -1,0 +1,18 @@
+{
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "targetDefaults": {
+      "build": {
+        "cache": true,
+        "outputs": ["{options.outputPath}"],
+        "dependsOn": [
+          "^build"
+        ]
+      },
+      "lint": {
+        "cache": true
+      }
+    },
+    "affected": {
+      "defaultBase": "main"
+    }
+  }

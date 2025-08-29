@@ -1,0 +1,17 @@
+# Ignore local environment variables
+.env
+
+# Ignore git history
+.git
+.gitignore
+
+# Ignore node_modules as they will be installed inside the container
+node_modules
+
+# Ignore build outputs and caches
+dist
+.nx/cache
+
+# Ignore IDE and OS-specific files
+.vscode
+*.md
