@@ -15,7 +15,6 @@ dist/
 *.json
 !pnpm-workspace.yaml
 !package.json
-pnpm-lock.yaml
 
 # Testing
 coverage/
