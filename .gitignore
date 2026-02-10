@@ -1,1 +1,24 @@
-node_modules
+# Dependencies
+node_modules/
+.pnpm-debug.log
+
+# Build Outputs
+dist/
+.serverless/
+.nx/cache/
+.nx/workspace-data/
+
+# Environment / Secrets (Critical!)
+.env
+.env.local
+*.pem
+*.json
+!pnpm-workspace.yaml
+!package.json
+
+# Testing
+coverage/
+
+# OS Files
+.DS_Store
+Thumbs.db

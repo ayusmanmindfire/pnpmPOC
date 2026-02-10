@@ -1,0 +1,8 @@
+{
+    "name": "gcp-greeting-service",
+    "version": "1.0.0",
+    "main": "main.js",
+    "dependencies": {
+      "@google-cloud/functions-framework": "^3.0.0"
+    }
+  }

@@ -1,33 +1,46 @@
 {
-  "name": "pnpm-poc",
+  "name": "js-serverless-monorepo-boilerplate",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "license": "MIT",
   "scripts": {
-    "start": "func start --script-root dist/functionD",
-    "build": "webpack --config webpack.config.js",
-    "build:functionA": "node scripts/merge-dists.js functionA",
-    "build:functionB": "node scripts/merge-dists.js functionB",
-    "build:functionC": "node scripts/merge-dists.js functionC"
+    "prepare": "husky",
+    "nx": "nx",
+    "lint": "nx run-many --target=lint",
+    "test": "nx run-many --target=test",
+    "build": "nx run-many --target=build",
+    "deploy": "nx run-many --target=deploy",
+    "affected:test": "nx affected --target=test",
+    "affected:deploy": "nx affected --target=deploy"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.26.10",
-    "@babel/preset-env": "^7.26.9",
-    "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.14.1",
-    "babel-loader": "^10.0.0",
-    "cross-env": "^7.0.3",
-    "fs-extra": "^11.3.0",
-    "webpack": "^5.99.5",
-    "webpack-cli": "^6.0.1",
-    "webpack-node-externals": "^3.0.0"
+    "@azure/functions": "^4.11.2",
+    "@google-cloud/functions-framework": "^5.0.0",
+    "@nx/js": "latest",
+    "@nx/workspace": "latest",
+    "@types/aws-lambda": "^8.10.160",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.27.3",
+    "husky": "^9.0.0",
+    "jest": "^29.7.0",
+    "nx": "latest",
+    "prettier": "^3.0.0",
+    "serverless": "^4.0.0",
+    "serverless-esbuild": "^1.57.0",
+    "serverless-offline": "^14.4.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.3.0"
+  },
+  "packageManager": "pnpm@10.2.1",
+  "nx": {
+    "includedProjects": [
+      "domain",
+      "application",
+      "infrastructure"
+    ]
   },
   "dependencies": {
-    "copy-webpack-plugin": "^13.0.0",
-    "fast-glob": "^3.3.3",
-    "glob": "^11.0.2"
+    "tslib": "^2.8.1"
   }
 }
